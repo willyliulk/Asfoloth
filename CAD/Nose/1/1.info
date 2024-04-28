@@ -1,0 +1,78 @@
+
+    System Info
+                Status:   Solver is finished.
+                Product:   Flow Simulation 2021 SP5.0. Build: 5403
+                Computer name:   LAPTOP-RGCM2DGV
+                User name:   Alex
+                Processors:   11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz
+                Memory:   32506 MB / 13548 MB
+                Operating system:   Windows 10 (or higher) (Version 10.0.22631)
+                CAD version:   SOLIDWORKS 2021 SP5.1
+                CPU speed:   2688 MHz
+
+    General Info
+                Model:   nose_asm.SLDASM
+                Project name:   Project(1)
+                Project path:   D:\Asfoloth\CAD\Nose\1
+                Units system:   SI (m-kg-s)
+                Analysis type:   External (not exclude internal spaces)
+                Exclude cavities without flow conditions :   On
+                Coordinate system:   Global Coordinate System
+                Reference axis:   X
+
+    Physical Features
+                Heat conduction in solids:   Off
+                Time dependent:   Off
+                Gravitational effects:   Off
+                Flow type:   Laminar and turbulent
+                High Mach number flow:   Off
+                Humidity:   Off
+                Free surface:   Off
+                Default roughness:   0 micrometer
+                Default wall conditions:   Adiabatic wall
+
+    Computational Domain
+
+        Size
+                X min:   -1.000 m
+                X max:   1.000 m
+                Y min:   -0.700 m
+                Y max:   0.700 m
+                Z min:   -1.000 m
+                Z max:   1.000 m
+                X size:   2.000 m
+                Y size:   1.400 m
+                Z size:   2.000 m
+
+    Calculation Mesh
+
+        Basic Mesh Dimensions
+                Number of cells in X:   12
+                Number of cells in Y:   10
+                Number of cells in Z:   12
+
+        Number Of Cells
+                Cells:   1008
+                Fluid cells:   1008
+                Irregular cells:   0
+                Trimmed cells:   0
+                Maximum refinement level:   0
+
+    Goals
+                
+                Name   	Unit   	Value   	Progress   	Criteria   	Delta   	Use in convergence 
+
+    General Info
+                Run at:   LAPTOP-RGCM2DGV
+                Number of cores:   12
+                Iterations:   46
+                CPU time:   3 s
+
+        Log
+                Mesh generation started	0:   20:57:58 , Apr 27
+                Mesh generation normally finished	0:   20:57:58 , Apr 27
+                Preparing data for calculation	0:   20:57:58 , Apr 27
+                Calculation started	0:   20:57:59 , Apr 27
+                Calculation has converged since the following criteria are satisfied:	46:   20:58:01 , Apr 27
+                    Goals are converged	46:   
+                Calculation finished	46:   20:58:01 , Apr 27

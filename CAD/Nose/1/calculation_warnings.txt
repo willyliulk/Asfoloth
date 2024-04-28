@@ -1,0 +1,7 @@
+2024-Apr-27 20:58:01
+Computer name:	LAPTOP-RGCM2DGV
+Number of cores used in calculation:	12
+Configuration name:	預設
+Project name:	Project(1)
+
+Warnings on last iteration: 
