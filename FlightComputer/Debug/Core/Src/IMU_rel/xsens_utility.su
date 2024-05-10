@@ -1,0 +1,13 @@
+../Core/Src/IMU_rel/xsens_utility.c:5:6:xsens_swap_endian_u16	16	static
+../Core/Src/IMU_rel/xsens_utility.c:11:6:xsens_swap_endian_u32	16	static
+../Core/Src/IMU_rel/xsens_utility.c:19:6:xsens_swap_endian_u64	16	static
+../Core/Src/IMU_rel/xsens_utility.c:31:10:xsens_coalesce_16BE_16LE	16	static
+../Core/Src/IMU_rel/xsens_utility.c:36:10:xsens_coalesce_32BE_32LE	16	static
+../Core/Src/IMU_rel/xsens_utility.c:44:7:xsens_coalesce_32BE_F32LE	24	static
+../Core/Src/IMU_rel/xsens_utility.c:58:6:xsens_coalesce_48BE_48LE	16	static
+../Core/Src/IMU_rel/xsens_utility.c:68:6:xsens_quaternion_to_euler	64	static
+../Core/Src/IMU_rel/xsens_utility.c:97:6:xsens_euler_to_quaternion	56	static
+../Core/Src/IMU_rel/xsens_utility.c:116:9:xsens_f32_to_fp1220	16	static
+../Core/Src/IMU_rel/xsens_utility.c:121:7:xsens_fp1220_to_f32	16	static
+../Core/Src/IMU_rel/xsens_utility.c:126:9:xsens_f64_to_fp1632	24	static
+../Core/Src/IMU_rel/xsens_utility.c:131:8:xsens_fp1632_to_f64	24	static
