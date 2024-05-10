@@ -8,3 +8,7 @@ APP:
 CAD:
     software: Solidworks 2021
     include: Asfoloth launch 1 avionics structure assembly 
+FC:
+    software: Stm32CubeIDE
+    include: flight computer program
+	function: communicate with MTi-7 by UART, communicate with LoRa by SPI
