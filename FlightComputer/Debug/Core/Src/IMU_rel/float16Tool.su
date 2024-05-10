@@ -1,0 +1,2 @@
+../Core/Src/IMU_rel/float16Tool.c:10:6:f32_to_f16	48	static
+../Core/Src/IMU_rel/float16Tool.c:44:7:f16_to_f32	32	static

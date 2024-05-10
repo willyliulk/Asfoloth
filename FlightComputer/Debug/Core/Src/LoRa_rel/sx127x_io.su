@@ -1,0 +1,17 @@
+../Core/Src/LoRa_rel/sx127x_io.c:28:6:LoRa_readReg	24	static
+../Core/Src/LoRa_rel/sx127x_io.c:53:6:LoRa_writeReg	24	static
+../Core/Src/LoRa_rel/sx127x_io.c:73:9:LoRa_read_single	32	static
+../Core/Src/LoRa_rel/sx127x_io.c:96:6:LoRa_write_single	32	static
+../Core/Src/LoRa_rel/sx127x_io.c:119:6:LoRa_BurstWrite	32	static
+../Core/Src/LoRa_rel/sx127x_io.c:149:9:LoRa_transmit	40	static,ignoring_inline_asm
+../Core/Src/LoRa_rel/sx127x_io.c:202:6:LoRa_startReceiving	16	static
+../Core/Src/LoRa_rel/sx127x_io.c:218:9:LoRa_receive	48	static
+../Core/Src/LoRa_rel/sx127x_io.c:252:6:LoRa_gotoMode	24	static
+../Core/Src/LoRa_rel/sx127x_io.c:294:10:LoRa_init	24	static
+../Core/Src/LoRa_rel/sx127x_io.c:403:6:LoRa_reset	16	static
+../Core/Src/LoRa_rel/sx127x_io.c:421:6:LoRa_setFrequency	24	static
+../Core/Src/LoRa_rel/sx127x_io.c:453:6:LoRa_setSpreadingFactor	24	static
+../Core/Src/LoRa_rel/sx127x_io.c:489:6:SX127x_set_Tcxo	24	static
+../Core/Src/LoRa_rel/sx127x_io.c:506:6:LoRa_set_CRCon	24	static
+../Core/Src/LoRa_rel/sx127x_io.c:527:9:LoRa_isvalid	16	static
+../Core/Src/LoRa_rel/sx127x_io.c:542:6:isTransmitting	16	static
