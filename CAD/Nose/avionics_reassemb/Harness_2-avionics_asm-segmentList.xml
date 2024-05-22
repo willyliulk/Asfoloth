@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<segmentData xmlns='http://www.solidworks.com/segmentData'>
+    <segment ID='2'>
+        <properties>
+            <Name value='CPoint1@db9 male-1@Harness_2-avionics_asm:CPoint1@db9 male-2@Harness_2-avionics_asm'/>
+            <FromCompID value='0'/>
+            <ToCompID value='0'/>
+            <FromConnectionPoint value=''/>
+            <ToConnectionPoint value=''/>
+            <FromComponentRef value=''/>
+            <ToComponentRef value=''/>
+            <Length value='0.162828'/>
+            <AdditionalLength value='0.182828'/>
+            <FromLocation value='0.175705,0.037210,-0.049080'/>
+            <ToLocation value='0.048623,0.054580,-0.042891'/>
+            <MaxDiameter value='0.000000'/>
+            <Diameter value='0.002000'/>
+            <Comment value='No Comments'/>
+            <Coverings value=''/>
+        </properties>
+    </segment>
+    <segment ID='3'>
+        <properties>
+            <Name value='JP3@Harness_2-avionics_asm:&#36899;&#25509;&#40670;1@Harness_2-avionics_asm.SLDASM'/>
+            <FromCompID value='0'/>
+            <ToCompID value='0'/>
+            <FromConnectionPoint value=''/>
+            <ToConnectionPoint value=''/>
+            <FromComponentRef value=''/>
+            <ToComponentRef value='JP3'/>
+            <Length value='0.038100'/>
+            <AdditionalLength value='0.038100'/>
+            <FromLocation value='0.085000,0.045000,-0.009000'/>
+            <ToLocation value='0.046900,0.045000,-0.009000'/>
+            <MaxDiameter value='0.000000'/>
+            <Diameter value='0.002000'/>
+            <Comment value='No Comments'/>
+            <Coverings value=''/>
+        </properties>
+    </segment>
+</segmentData>
