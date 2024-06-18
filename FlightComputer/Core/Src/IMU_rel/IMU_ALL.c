@@ -75,6 +75,7 @@ void IMU_process_data() {
 		memset(imu.IMU_buffer, imu.IMU_data_Size, IMU_BUFFER_SIZE);
 		imu.IMU_got_data = false;
 		imu.IMU_data_Size = 0;
+		imu.IMU_prc_data = true;
 	}
 }
 
@@ -171,9 +172,10 @@ void IMU_State_mechine(){
 	break;
 
 	case STATE_RUNNING:
-		if(imu.IMU_got_data == true){
+		if(imu.IMU_prc_data == true){
 			imu.timer_timeOut = HAL_GetTick();
 			imu.no_stuck=true;
+			imu.IMU_prc_data = false;
 		}else if((imu.no_stuck == false) && (HAL_GetTick() - imu.timer_timeOut > 2000)){
 
 			printf("recieve error\n");

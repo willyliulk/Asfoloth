@@ -48,6 +48,7 @@ typedef struct{
 	//IMU dma setup
 	uint8_t IMU_buffer[IMU_BUFFER_SIZE];
 	bool IMU_got_data;
+	bool IMU_prc_data;
 	uint16_t IMU_data_Size;
 	UART_HandleTypeDef *IMU_uart_handle;
 

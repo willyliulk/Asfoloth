@@ -14,3 +14,8 @@ Video
 .vs/Asfoloth/FileContentIndex/06e54dce-87df-46d4-80cf-aaec59004d77.vsidx
 .vs/Asfoloth/FileContentIndex/e030efc6-0143-42c0-be73-c0972275fc10.vsidx
 /.vs/Asfoloth/FileContentIndex
+*.o
+*.cyclo
+*.prefs
+*.mk
+*.elf

@@ -177,7 +177,7 @@ void proc_data_1_uint8(IMU_DATA_TO_SEND_t *data, uint8_t value){
 	data->length+=1;
 }
 
-void imu_data_conv(IMU *imu, IMU_DATA_TO_SEND_t *out){
+void imu_data_conv_config(IMU *imu, IMU_DATA_TO_SEND_t *out){
 	out->length = 0;
 	proc_data_1_uint8(out   , data_hour 	);
 	proc_data_1_uint8(out   , data_min  	);
@@ -210,7 +210,39 @@ void imu_data_conv(IMU *imu, IMU_DATA_TO_SEND_t *out){
 	proc_data_4(out    , data_PA_temp);
 
 }
+void imu_data_conv_onFly(IMU *imu, IMU_DATA_TO_SEND_t *out){
+	out->length = 0;
+	proc_data_1_uint8(out   , data_hour 	);
+	proc_data_1_uint8(out   , data_min  	);
+	proc_data_1_uint8(out   , data_sec  	);
+	proc_data_1_uint8(out 	, data_subSec );
+	proc_data_2_uint16(out	, data_counter);
+	proc_data_4(out    		, imu->quaternionWXYZ[0]);
+	proc_data_4(out    		, imu->quaternionWXYZ[1]);
+	proc_data_4(out    		, imu->quaternionWXYZ[2]);
+	proc_data_4(out    		, imu->quaternionWXYZ[3]);
+	proc_data_2(out    		, imu->rateOfTurnXYZ[0]);
+	proc_data_2(out    		, imu->rateOfTurnXYZ[1]);
+	proc_data_2(out    		, imu->rateOfTurnXYZ[2]);
+	proc_data_2(out    		, imu->freeAccelerationXYZ[0]);
+	proc_data_2(out    		, imu->freeAccelerationXYZ[1]);
+	proc_data_2(out    		, imu->freeAccelerationXYZ[2]);
+	proc_data_2(out			, imu->positionEcefXYZ[0]);
+	proc_data_2(out			, imu->positionEcefXYZ[1]);
+	proc_data_2(out			, imu->positionEcefXYZ[2]);
+	proc_data_2(out			, imu->velocityXYZ[0]);
+	proc_data_2(out			, imu->velocityXYZ[1]);
+	proc_data_2(out			, imu->velocityXYZ[2]);
 
+}
+
+GPIO_PinState modeSwitch = 0, prevModeSwitch = 0;
+typedef enum flymode{
+	config,
+	onFly
+} flyMode;
+flyMode curFlyMode;
+uint32_t flyModeDebounce = 0;
 
 
 
@@ -248,7 +280,6 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_SPI1_Init();
   MX_USART1_UART_Init();
   MX_USART3_UART_Init();
   MX_SPI4_Init();
@@ -276,7 +307,7 @@ int main(void)
   myLoRa.preamble = 10;
   myLoRa.paselect = RFO;
   myLoRa.maxpower = 7;
-  myLoRa.outputpower = 10;                //0~15
+  myLoRa.outputpower = 15;                //0~15
 //  myLoRa.paselect = PA_BOOST;
 //  myLoRa.maxpower = 7;
 //  myLoRa.outputpower = 15;
@@ -332,9 +363,9 @@ int main(void)
 			printf("Reset RTC timer\n");
 			RTC_TimeTypeDef IMU_time;
 			RTC_DateTypeDef IMU_date;
-			IMU_date.Year			= imu.myGnssData.year-2000;
+			IMU_date.Year		= imu.myGnssData.year-2000;
 			IMU_date.Month		= imu.myGnssData.month;
-			IMU_date.Date			= imu.myGnssData.day;
+			IMU_date.Date		= imu.myGnssData.day;
 			IMU_time.Hours 		= imu.myGnssData.hour;
 			IMU_time.Minutes 	= imu.myGnssData.minute;
 			IMU_time.Seconds	= imu.myGnssData.second;
@@ -345,15 +376,31 @@ int main(void)
 			GPS_no_calied= false;
 		}
 
+		/*check fly mode switch*/
+		modeSwitch = HAL_GPIO_ReadPin(Mode_Switch_GPIO_Port, Mode_Switch_Pin);
+		if(modeSwitch == GPIO_PIN_RESET && prevModeSwitch == GPIO_PIN_SET && HAL_GetTick() > flyModeDebounce){
+			flyModeDebounce = HAL_GetTick() + 1000;
+			if(curFlyMode == config){
+				curFlyMode = onFly;
+				printf("fly mode now --> on fly\n");
+			}else{
+				curFlyMode = config;
+				printf("fly mode now --> config\n");
+			}
+		}
+		prevModeSwitch = modeSwitch;
+
+
 //	  //LoRa_receive()
-//		uint8_t read_value[128];
-//		uint8_t read_leng = sizeof(read_value)/sizeof(read_value[0]);
-//		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_SET);      //low frequency port switch, RESET for transmit, SET for receive
-//		check_ver = LoRa_receive(&myLoRa, read_value, read_leng);//return received size
-//		if(check_ver){
+		uint8_t read_value[128];
+		uint8_t read_leng = sizeof(read_value)/sizeof(read_value[0]);
+		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_SET);      //low frequency port switch, RESET for transmit, SET for receive
+		check_ver = LoRa_receive(&myLoRa, read_value, read_leng);//return received size
+		if(check_ver){
 //			HAL_UART_Transmit(&EXT_uart, read_value, read_leng, 0xFFFF);
-//		}
-//		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_RESET);      //low frequency port switch, RESET for transmit, SET for receive
+			printf("%s\n", read_value);
+		}
+		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_RESET);      //low frequency port switch, RESET for transmit, SET for receive
 
 
 		if(HAL_GetTick() - timer > 333){
@@ -367,7 +414,13 @@ int main(void)
 
 
 			//packing data from IMU to send via Lora
-			imu_data_conv(&imu, &data2Lora);
+			if(curFlyMode == config){
+				imu_data_conv_config(&imu, &data2Lora);
+			}
+			else if(curFlyMode == onFly){
+				imu_data_conv_onFly(&imu, &data2Lora);
+			}
+
 
 			//LoRa_transmit()
 			uint8_t send_value[myLoRa.packetSize];
@@ -379,17 +432,16 @@ int main(void)
 			state = LoRa_transmit(&myLoRa, data2Lora.datas, data2Lora.length, TRANSMIT_TIMEOUT);
 
 
-
 			loopRunTime = HAL_GetTick() - loopRunTime;
-			printf("acc:%f,%f,%f,%f,%f,%d,%d,%d\n",
-				imu.quaternionWXYZ[0],
-				imu.quaternionWXYZ[1],
-				imu.quaternionWXYZ[2],
-				imu.quaternionWXYZ[3],
-				data_PA_temp,
-				data2Lora.length,
-				loopRunTime,
-				data_counter);
+//			printf("acc:%f,%f,%f,%f,%f,%d,%d,%d\n",
+//				imu.quaternionWXYZ[0],
+//				imu.quaternionWXYZ[1],
+//				imu.quaternionWXYZ[2],
+//				imu.quaternionWXYZ[3],
+//				data_PA_temp,
+//				data2Lora.length,
+//				loopRunTime,
+//				data_counter);
 
 
 
