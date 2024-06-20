@@ -93,7 +93,7 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN Private defines */
 
-#define EXT_BUFFER_SIZE 512
+#define EXT_BUFFER_SIZE 1024
 
 
 /* USER CODE END Private defines */

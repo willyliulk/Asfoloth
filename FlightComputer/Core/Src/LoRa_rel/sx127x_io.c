@@ -32,6 +32,13 @@ void LoRa_readReg(LoRa* _LoRa, uint8_t* address, uint16_t r_length, uint8_t* out
 	HAL_SPI_Receive(_LoRa->hSPIx, output, w_length, RECEIVE_TIMEOUT);
 	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
 	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_SET);
+
+//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_RESET);
+//	HAL_SPI_Transmit_DMA(_LoRa->hSPIx, address, r_length);
+//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
+//	HAL_SPI_Receive_DMA(_LoRa->hSPIx, output, w_length);
+//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
+//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_SET);
 }
 
 
@@ -57,6 +64,14 @@ void LoRa_writeReg(LoRa* _LoRa, uint8_t* address, uint16_t r_length, uint8_t* va
 	HAL_SPI_Transmit(_LoRa->hSPIx, values, w_length, TRANSMIT_TIMEOUT);
 	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
 	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_SET);
+
+//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_RESET);
+//	HAL_SPI_Transmit_DMA(_LoRa->hSPIx, address, r_length);
+//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
+//	HAL_SPI_Transmit_DMA(_LoRa->hSPIx, values, w_length);
+//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
+//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_SET);
+
 }
 
 /* ----------------------------------------------------------------------------- *\
@@ -120,7 +135,7 @@ void LoRa_BurstWrite(LoRa* _LoRa, uint8_t address, uint8_t *value, uint8_t lengt
 	uint8_t addr;
 	addr = address | 0x80;
 
-	//NSS = 1
+//	//NSS = 1
 	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_RESET);
 	//say module that I want to write in RegFiFo
 	HAL_SPI_Transmit(_LoRa->hSPIx, &addr, 1, TRANSMIT_TIMEOUT);
@@ -131,6 +146,18 @@ void LoRa_BurstWrite(LoRa* _LoRa, uint8_t address, uint8_t *value, uint8_t lengt
 	//NSS = 0
 	//HAL_Delay(5);
 	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_SET);
+
+	//NSS = 1
+//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_RESET);
+//	//say module that I want to write in RegFiFo
+//	HAL_SPI_Transmit_DMA(_LoRa->hSPIx, &addr, 1);
+//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
+//	//Write data in FiFo
+//	HAL_SPI_Transmit_DMA(_LoRa->hSPIx, value, length);
+//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
+//	//NSS = 0
+//	//HAL_Delay(5);
+//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_SET);
 
 }
 
@@ -223,8 +250,11 @@ uint8_t LoRa_receive(LoRa* _LoRa, uint8_t* data, uint8_t length){
 	for(int i=0; i<length; i++)
 		data[i]=0;
 
-	LoRa_gotoMode(_LoRa, STANDBY_MODE);
+//	LoRa_gotoMode(_LoRa, STANDBY_MODE);
 	read = LoRa_read_single(_LoRa, SX127x_LoRa_IrqFlags);
+	if(read!= 0){
+
+	}
 	if((read & 0x40) != 0){
 		LoRa_write_single(_LoRa, SX127x_LoRa_IrqFlags, 0xFF);
 		number_of_bytes = LoRa_read_single(_LoRa, SX127x_LoRa_RxNbBytes);
@@ -318,7 +348,7 @@ uint16_t LoRa_init(LoRa* _LoRa){
 	// set frequency:
 	LoRa_setFrequency(_LoRa, _LoRa->frequency);
 
-	// set bandwidth, coding rate and expilicit mode:
+	// set bandwidth, coding rate and expli
 	data = (_LoRa->bandWidth << 4) | (_LoRa->crcRate << 1) | (_LoRa->implicit_on << 0);
 	LoRa_write_single(_LoRa, SX127x_LoRa_ModemConfig, data);
 	HAL_Delay(10);
@@ -372,9 +402,9 @@ uint16_t LoRa_init(LoRa* _LoRa){
 
 
 //		// DIO mapping:   --> DIO: RxDone
-//			read = LoRa_read(_LoRa, RegDioMapping1);
-//			data = read | 0x3F;
-//			LoRa_write(_LoRa, RegDioMapping1, data);
+	read = LoRa_read_single(_LoRa, SX127x_DioMapping1);
+	data = read | 0x3F;
+	LoRa_write_single(_LoRa, SX127x_DioMapping1, data);
 //
 	// goto standby mode:
 	LoRa_gotoMode(_LoRa, STANDBY_MODE);
@@ -460,18 +490,18 @@ void LoRa_setSpreadingFactor(LoRa* _LoRa, uint8_t SF){
 		SF = 12;
 	}
 
-//	if (SF == 6) {
-//		LoRa_write_single(_LoRa, SX127x_LoRa_DetectOptimize, 0xc5);
-//		LoRa_write_single(_LoRa, SX127x_LoRa_DetectionThreshold, 0x0c);
-//	} else {
-//		LoRa_write_single(_LoRa, SX127x_LoRa_DetectOptimize, 0xc3);
-//		LoRa_write_single(_LoRa, SX127x_LoRa_DetectionThreshold, 0x0a);
-//	}
+	if (SF == 6) {
+		LoRa_write_single(_LoRa, SX127x_LoRa_DetectOptimize, 0xc5);
+		LoRa_write_single(_LoRa, SX127x_LoRa_DetectionThreshold, 0x0c);
+	} else {
+		LoRa_write_single(_LoRa, SX127x_LoRa_DetectOptimize, 0xc3);
+		LoRa_write_single(_LoRa, SX127x_LoRa_DetectionThreshold, 0x0a);
+	}
 
 	read = LoRa_read_single(_LoRa, SX127x_LoRa_ModemConfig2);
 	HAL_Delay(1);
 
-	data = (SF << 4) | (read & 0x0F);
+	data = ((SF << 4)) | (read & 0x0F);
 	LoRa_write_single(_LoRa, SX127x_LoRa_ModemConfig2, data);
 	HAL_Delay(1);
 }

@@ -191,7 +191,7 @@ void IMU_State_mechine(){
 			imu.calided = true;
 		}
 
-//
+
 //		if (EXT_got_data) {
 //			char commandChar[10] = { 0 };
 //			sscanf(EXT_buffer, "%s\n", commandChar);
@@ -208,7 +208,6 @@ void IMU_State_mechine(){
 //				imu.imu_state = STATE_REQUEST_CONFIG_MODE;
 //			}
 //
-
 //		}
 	break;
 	default:

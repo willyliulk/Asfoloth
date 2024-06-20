@@ -244,6 +244,7 @@ typedef enum flymode{
 flyMode curFlyMode;
 uint32_t flyModeDebounce = 0;
 
+bool lora_recv_open = false;
 
 
 /* USER CODE END 0 */
@@ -287,6 +288,7 @@ int main(void)
   MX_ADC3_Init();
   /* USER CODE BEGIN 2 */
 
+
   myLoRa.hSPIx = &hspi4;
   myLoRa.CS_port = SPI4_CS_GPIO_Port;
   myLoRa.CS_pin = SPI4_CS_Pin;
@@ -319,8 +321,9 @@ int main(void)
   myLoRa.TCXOon = 0;
   myLoRa.packetSize = 12;
 
+  LoRa_reset(&myLoRa);
   LoRa_init(&myLoRa);              //initialize LoRa configuration
-
+  LoRa_startReceiving(&myLoRa);
 
 	IMU_Init();
 
@@ -392,15 +395,14 @@ int main(void)
 
 
 //	  //LoRa_receive()
-		uint8_t read_value[128];
+		uint8_t read_value[256];
 		uint8_t read_leng = sizeof(read_value)/sizeof(read_value[0]);
 		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_SET);      //low frequency port switch, RESET for transmit, SET for receive
 		check_ver = LoRa_receive(&myLoRa, read_value, read_leng);//return received size
 		if(check_ver){
-//			HAL_UART_Transmit(&EXT_uart, read_value, read_leng, 0xFFFF);
 			printf("%s\n", read_value);
 		}
-		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_RESET);      //low frequency port switch, RESET for transmit, SET for receive
+//		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_RESET);      //low frequency port switch, RESET for transmit, SET for receive
 
 
 		if(HAL_GetTick() - timer > 333){
@@ -423,18 +425,21 @@ int main(void)
 
 
 			//LoRa_transmit()
-			uint8_t send_value[myLoRa.packetSize];
-			uint8_t send_leng = sizeof(send_value)/sizeof(send_value[0]);
-			uint8_t state;
-			for (int i = 0;i<=myLoRa.packetSize;i++){
-				send_value[i] = (uint8_t)imu.accelerationXYZ[i];
+#if 0
+			HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_RESET);
+			uint8_t err = LoRa_transmit(&myLoRa, data2Lora.datas, data2Lora.length, TRANSMIT_TIMEOUT);
+			if(err == 0){
+				printf("LoRa_transmit timed out\n");
+			}else{
+				printf("LoRa_transmit seccessed\n");
+				HAL_Delay(100);
 			}
-			state = LoRa_transmit(&myLoRa, data2Lora.datas, data2Lora.length, TRANSMIT_TIMEOUT);
-
+			HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_SET);
+#endif
 
 			loopRunTime = HAL_GetTick() - loopRunTime;
 //			printf("acc:%f,%f,%f,%f,%f,%d,%d,%d\n",
-//				imu.quaternionWXYZ[0],
+//				imu.quatern4i747474744452522222225555555530
 //				imu.quaternionWXYZ[1],
 //				imu.quaternionWXYZ[2],
 //				imu.quaternionWXYZ[3],
@@ -442,7 +447,6 @@ int main(void)
 //				data2Lora.length,
 //				loopRunTime,
 //				data_counter);
-
 
 
 //			HAL_UART_Transmit(&EXT_uart, data2Lora.datas, data2Lora.length, 0xFFFF);
