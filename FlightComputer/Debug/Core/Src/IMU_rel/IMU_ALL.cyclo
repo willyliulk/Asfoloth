@@ -1,6 +1,7 @@
 ../Core/Src/IMU_rel/IMU_ALL.c:20:6:IMU_UART_CB	3
 ../Core/Src/IMU_rel/IMU_ALL.c:43:6:IMU_Init	1
 ../Core/Src/IMU_rel/IMU_ALL.c:69:6:IMU_process_data	3
+<<<<<<< HEAD
 ../Core/Src/IMU_rel/IMU_ALL.c:82:6:IMU_State_mechine	19
 ../Core/Src/IMU_rel/IMU_ALL.c:220:6:imu_callback	21
 ../Core/Src/IMU_rel/IMU_ALL.c:317:6:handle_ack_gotoconfig	1
@@ -10,3 +11,14 @@
 ../Core/Src/IMU_rel/IMU_ALL.c:335:6:imu_send_data	1
 ../Core/Src/IMU_rel/IMU_ALL.c:339:6:changeRotMatrix	5
 ../Core/Src/IMU_rel/IMU_ALL.c:365:6:changeOutputRate	1
+=======
+../Core/Src/IMU_rel/IMU_ALL.c:81:6:IMU_State_mechine	19
+../Core/Src/IMU_rel/IMU_ALL.c:219:6:imu_callback	21
+../Core/Src/IMU_rel/IMU_ALL.c:316:6:handle_ack_gotoconfig	1
+../Core/Src/IMU_rel/IMU_ALL.c:320:6:handle_ack_gotomeasurement	1
+../Core/Src/IMU_rel/IMU_ALL.c:324:6:handle_ack_outputconfiguration	1
+../Core/Src/IMU_rel/IMU_ALL.c:328:6:myHandle_WAKEUP_cb	1
+../Core/Src/IMU_rel/IMU_ALL.c:334:6:imu_send_data	1
+../Core/Src/IMU_rel/IMU_ALL.c:338:6:changeRotMatrix	5
+../Core/Src/IMU_rel/IMU_ALL.c:364:6:changeOutputRate	1
+>>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488

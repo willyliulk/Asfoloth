@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 ../Core/Src/gpio.c:43:6:MX_GPIO_Init	1
+=======
+../Core/Src/gpio.c:42:6:MX_GPIO_Init	1
+>>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488

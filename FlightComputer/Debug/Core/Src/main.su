@@ -4,9 +4,17 @@
 ../Core/Src/main.c:156:6:proc_data_2	24	static
 ../Core/Src/main.c:166:6:proc_data_2_uint16	24	static
 ../Core/Src/main.c:175:6:proc_data_1_uint8	16	static
+<<<<<<< HEAD
 ../Core/Src/main.c:180:6:imu_data_conv_config	16	static
 ../Core/Src/main.c:213:6:imu_data_conv_onFly	16	static
 ../Core/Src/main.c:256:5:main	1344	static
 ../Core/Src/main.c:486:6:SystemClock_Config	88	static
 ../Core/Src/main.c:529:7:hex2float	24	static
 ../Core/Src/main.c:547:6:Error_Handler	4	static,ignoring_inline_asm
+=======
+../Core/Src/main.c:180:6:imu_data_conv	16	static
+../Core/Src/main.c:223:5:main	1224	static
+../Core/Src/main.c:459:6:SystemClock_Config	88	static
+../Core/Src/main.c:502:7:hex2float	24	static
+../Core/Src/main.c:520:6:Error_Handler	4	static,ignoring_inline_asm
+>>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488

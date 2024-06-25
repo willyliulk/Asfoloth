@@ -41,9 +41,11 @@ extern "C" {
 
 #include "stdint.h"
 //LoRa related
-#include "LoRa_rel/sx127x_io.h"
-#include "LoRa_rel/sx127x_config.h"
-#include "LoRa_rel/sx127x_reg.h"
+//#include "LoRa_rel/sx127x_io.h"
+//#include "LoRa_rel/sx127x_config.h"
+//#include "LoRa_rel/sx127x_reg.h"
+#include "LoRa.h"
+
 
 /* USER CODE END Includes */
 
