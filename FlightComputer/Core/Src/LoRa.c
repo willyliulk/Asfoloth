@@ -110,13 +110,6 @@ void LoRa_readReg(LoRa* _LoRa, uint8_t* address, uint16_t r_length, uint8_t* out
 	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY)
 		;
 	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_SET);
-
-//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_RESET);
-//	HAL_SPI_Transmit_DMA(_LoRa->hSPIx, address, r_length);
-//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
-//	HAL_SPI_Receive_DMA(_LoRa->hSPIx, output, w_length);
-//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
-//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_SET);
 }
 
 /* ----------------------------------------------------------------------------- *\
@@ -143,14 +136,6 @@ void LoRa_writeReg(LoRa* _LoRa, uint8_t* address, uint16_t r_length, uint8_t* va
 	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY)
 		;
 	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_SET);
-
-//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_RESET);
-//	HAL_SPI_Transmit_DMA(_LoRa->hSPIx, address, r_length);
-//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
-//	HAL_SPI_Transmit_DMA(_LoRa->hSPIx, values, w_length);
-//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
-//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_SET);
-
 }
 
 /* ----------------------------------------------------------------------------- *\
@@ -354,7 +339,7 @@ uint8_t LoRa_read(LoRa* _LoRa, uint8_t address){
 
 	data_addr = address & 0x7F;
 	LoRa_readReg(_LoRa, &data_addr, 1, &read_data, 1);
-	HAL_Delay(1);
+	//HAL_Delay(5);
 
 	return read_data;
 }
@@ -397,7 +382,7 @@ void LoRa_BurstWrite(LoRa* _LoRa, uint8_t address, uint8_t *value, uint8_t lengt
 	uint8_t addr;
 	addr = address | 0x80;
 
-//	//NSS = 1
+	//NSS = 1
 	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_RESET);
 	
 	HAL_SPI_Transmit(_LoRa->hSPIx, &addr, 1, TRANSMIT_TIMEOUT);
@@ -414,20 +399,6 @@ void LoRa_BurstWrite(LoRa* _LoRa, uint8_t address, uint8_t *value, uint8_t lengt
 /* ----------------------------------------------------------------------------- *\
 		name        : LoRa_isvalid
 
-<<<<<<< HEAD:FlightComputer/Core/Src/LoRa_rel/sx127x_io.c
-	//NSS = 1
-//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_RESET);
-//	//say module that I want to write in RegFiFo
-//	HAL_SPI_Transmit_DMA(_LoRa->hSPIx, &addr, 1);
-//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
-//	//Write data in FiFo
-//	HAL_SPI_Transmit_DMA(_LoRa->hSPIx, value, length);
-//	while (HAL_SPI_GetState(_LoRa->hSPIx) != HAL_SPI_STATE_READY);
-//	//NSS = 0
-//	//HAL_Delay(5);
-//	HAL_GPIO_WritePin(_LoRa->CS_port, _LoRa->CS_pin, GPIO_PIN_SET);
-
-=======
 		description : check the LoRa instruct values
 
 		arguments   :
@@ -438,7 +409,6 @@ void LoRa_BurstWrite(LoRa* _LoRa, uint8_t address, uint8_t *value, uint8_t lengt
 uint8_t LoRa_isvalid(LoRa* _LoRa){
 
 	return 1;
->>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488:FlightComputer/Core/Src/LoRa.c
 }
 
 /* ----------------------------------------------------------------------------- *\
@@ -514,16 +484,8 @@ uint8_t LoRa_receive(LoRa* _LoRa, uint8_t* data, uint8_t length){
 	for(int i=0; i<length; i++)
 		data[i]=0;
 
-<<<<<<< HEAD:FlightComputer/Core/Src/LoRa_rel/sx127x_io.c
-//	LoRa_gotoMode(_LoRa, STANDBY_MODE);
-	read = LoRa_read_single(_LoRa, SX127x_LoRa_IrqFlags);
-	if(read!= 0){
-
-	}
-=======
 //	LoRa_gotoMode(_LoRa, STNBY_MODE);
 	read = LoRa_read(_LoRa, RegIrqFlags);
->>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488:FlightComputer/Core/Src/LoRa.c
 	if((read & 0x40) != 0){
 		LoRa_write(_LoRa, RegIrqFlags, 0xFF);
 		number_of_bytes = LoRa_read(_LoRa, RegRxNbBytes);
@@ -626,249 +588,7 @@ uint16_t LoRa_init(LoRa* _LoRa){
 			else
 				return LORA_NOT_FOUND;
 	}
-<<<<<<< HEAD:FlightComputer/Core/Src/LoRa_rel/sx127x_io.c
-	data = read | (_LoRa->LoRa_modem << 7) | (LowFreqModeOn<<3);             //needed operation mode register value
-	LoRa_write_single(_LoRa, SX127x_OpMode, data);
-	HAL_Delay(10);
-
-	// set frequency:
-	LoRa_setFrequency(_LoRa, _LoRa->frequency);
-
-	// set bandwidth, coding rate and expli
-	data = (_LoRa->bandWidth << 4) | (_LoRa->crcRate << 1) | (_LoRa->implicit_on << 0);
-	LoRa_write_single(_LoRa, SX127x_LoRa_ModemConfig, data);
-	HAL_Delay(10);
-
-	// set spreading factor, CRC on, and Timeout Msb:
-//	LoRa_setTOMsb_setCRCon(_LoRa);
-	LoRa_setSpreadingFactor(_LoRa, _LoRa->spredingFactor);
-	//enable CRC
-	LoRa_set_CRCon(_LoRa, _LoRa->CRCon);
-
-	// set preamble:
-	LoRa_write_single(_LoRa, SX127x_LoRa_PreambleMsb, _LoRa->preamble >> 8);
-	HAL_Delay(10);
-	LoRa_write_single(_LoRa, SX127x_LoRa_PreambleLsb, _LoRa->preamble >> 0);
-	HAL_Delay(10);
-
-	// set output power gain:
-	data = (_LoRa->paselect << 7) | (_LoRa->maxpower << 4) | (_LoRa->outputpower << 0);
-	LoRa_write_single(_LoRa, SX127x_PaConfig, data);
-	HAL_Delay(10);
-
-    //20dBm output
-	LoRa_write_single(_LoRa, SX127x_PaDac, _LoRa->PaDac);
-
-	//set OCP current protect
-	data = (0x01 << 5) | (_LoRa->PaOcp);
-	LoRa_write_single(_LoRa, SX127x_Ocp, data);
-	HAL_Delay(10);
-//
-//		// set over current protection:
-//			LoRa_setOCP(_LoRa, _LoRa->overCurrentProtection);
-//
-//		// set LNA gain:
-//			LoRa_write(_LoRa, RegLna, 0x23);
-
-	//normal I&Q
-//	LoRa_write_single(_LoRa, SX127x_LoRa_InvertIQ, 0x26);
-//	LoRa_write_single(_LoRa, SX127x_LoRa_InvertIQ2, 0x1d);
-	//invert I&Q
-	LoRa_write_single(_LoRa, SX127x_LoRa_InvertIQ, 0x67);
-	LoRa_write_single(_LoRa, SX127x_LoRa_InvertIQ2, 0x19);
-	HAL_Delay(10);
-
-//		// set Timeout Lsb:
-//			LoRa_write(_LoRa, RegSymbTimeoutL, 0xFF);
-
-	// set base addresses
-	LoRa_write_single(_LoRa, SX127x_LoRa_FifoRxBaseAddr, 0);
-	LoRa_write_single(_LoRa, SX127x_LoRa_FifoTxBaseAddr, 0);
-
-
-
-//		// DIO mapping:   --> DIO: RxDone
-	read = LoRa_read_single(_LoRa, SX127x_DioMapping1);
-	data = read | 0x3F;
-	LoRa_write_single(_LoRa, SX127x_DioMapping1, data);
-//
-	// goto standby mode:
-	LoRa_gotoMode(_LoRa, STANDBY_MODE);
-	_LoRa->current_mode = STANDBY_MODE;
-	HAL_Delay(10);
-
-	return LORA_OK;
-//
-//			read = LoRa_read(_LoRa, RegVersion);
-//			if(read == 0x12)
-//				return LORA_OK;
-//			else
-//				return LORA_NOT_FOUND;
-}
-
-/* ----------------------------------------------------------------------------- *\
-		name        : LoRa_reset
-
-		description : reset module
-
-		arguments   :
-			LoRa* LoRa --> LoRa object handler
-
-		returns     : Nothing
-\* ----------------------------------------------------------------------------- */
-void LoRa_reset(LoRa* _LoRa){
-	HAL_GPIO_WritePin(_LoRa->reset_port, _LoRa->reset_pin, GPIO_PIN_RESET);
-	HAL_Delay(1);
-	HAL_GPIO_WritePin(_LoRa->reset_port, _LoRa->reset_pin, GPIO_PIN_SET);
-	HAL_Delay(100);
-}
-
-/* ----------------------------------------------------------------------------- *\
-		name        : LoRa_setFrequency
-
-		description : set carrier frequency e.g 433 MHz
-
-		arguments   :
-			LoRa* LoRa        --> LoRa object handler
-			int   freq        --> desired frequency in MHz unit, e.g 434
-
-		returns     : Nothing
-\* ----------------------------------------------------------------------------- */
-void LoRa_setFrequency(LoRa* _LoRa, uint16_t freq){
-	uint8_t  data;
-	uint32_t Frf;
-	Frf = (freq * 524288) / 32;       //Frf = fRF*(2^19)/F(XOSC), 2^19 = 524288, F(XOSC) usually = 32MHz, Frf = 0xABCDEF
-
-	// write Msb(0xAB):
-	data = Frf >> 16;
-	LoRa_write_single(_LoRa, SX127x_FrMsb, data);
-	HAL_Delay(1);
-
-	// write Mid(0xCD):
-	data = Frf >> 8;
-	LoRa_write_single(_LoRa, SX127x_FrMid, data);
-	HAL_Delay(1);
-
-	// write Lsb(0xEF):
-	data = Frf >> 0;
-	LoRa_write_single(_LoRa, SX127x_FrLsb, data);
-	HAL_Delay(1);
-}
-
-/* ----------------------------------------------------------------------------- *\
-		name        : LoRa_setSpreadingFactor
-
-		description : set spreading factor, from 7 to 12.
-
-		arguments   :
-			LoRa* LoRa        --> LoRa object handler
-			int   SP          --> desired spreading factor e.g 7
-
-		returns     : Nothing
-\* ----------------------------------------------------------------------------- */
-void LoRa_setSpreadingFactor(LoRa* _LoRa, uint8_t SF){
-	uint8_t	data;
-	uint8_t	read;
-
-	if (SF < 6) {
-		SF = 6;
-	} else if (SF > 12) {
-		SF = 12;
-	}
-
-	if (SF == 6) {
-		LoRa_write_single(_LoRa, SX127x_LoRa_DetectOptimize, 0xc5);
-		LoRa_write_single(_LoRa, SX127x_LoRa_DetectionThreshold, 0x0c);
-	} else {
-		LoRa_write_single(_LoRa, SX127x_LoRa_DetectOptimize, 0xc3);
-		LoRa_write_single(_LoRa, SX127x_LoRa_DetectionThreshold, 0x0a);
-	}
-
-	read = LoRa_read_single(_LoRa, SX127x_LoRa_ModemConfig2);
-	HAL_Delay(1);
-
-	data = ((SF << 4)) | (read & 0x0F);
-	LoRa_write_single(_LoRa, SX127x_LoRa_ModemConfig2, data);
-	HAL_Delay(1);
-}
-
-/* ----------------------------------------------------------------------------- *\
-		name        : SX127x_set_Tcxo
-
-		description : set the clock reference
-
-		arguments   :
-			bool on --> LoRa object handler
-
-		returns     : void
-\* ----------------------------------------------------------------------------- */
-void SX127x_set_Tcxo(LoRa* _LoRa, bool on)
-{
-    uint8_t	data;
-    data = on << 4;
-    LoRa_write_single(_LoRa, SX127x_Tcxo, data);
-}
-
-/* ----------------------------------------------------------------------------- *\
-		name        : LoRa_isvalid
-
-		description : check the LoRa instruct values
-
-		arguments   :
-			LoRa* LoRa --> LoRa object handler
-
-		returns     : returns 1 if all of the values were given, otherwise returns 0
-\* ----------------------------------------------------------------------------- */
-void LoRa_set_CRCon(LoRa* _LoRa, uint8_t CRCvalue){
-	uint8_t	data;
-	uint8_t	read;
-	read = LoRa_read_single(_LoRa, SX127x_LoRa_ModemConfig2);
-	HAL_Delay(1);
-
-	data = (CRCvalue << 2) | (read | 0x04);
-	LoRa_write_single(_LoRa, SX127x_LoRa_ModemConfig2, data);
-	HAL_Delay(1);
-}
-
-/* ----------------------------------------------------------------------------- *\
-		name        : LoRa_isvalid
-
-		description : check the LoRa instruct values
-
-		arguments   :
-			LoRa* LoRa --> LoRa object handler
-
-		returns     : returns 1 if all of the values were given, otherwise returns 0
-\* ----------------------------------------------------------------------------- */
-uint8_t LoRa_isvalid(LoRa* _LoRa){
-
-	return 1;
-}
-
-/* ----------------------------------------------------------------------------- *\
-		name        : isTransmitting
-
-		description : check LoRa is transmitting or not
-
-		arguments   :
-			LoRa* LoRa --> LoRa object handler
-
-		returns     : returns 1 if all of the values were given, otherwise returns 0
-\* ----------------------------------------------------------------------------- */
-bool isTransmitting(LoRa* _LoRa)
-{
-  if ((LoRa_read_single(_LoRa, SX127x_OpMode) & 0x07) == TRANSMIT_MODE) {
-    return true;
-  }
-
-//  if (LoRa_read_single(_LoRa, SX127x_LoRa_IrqFlags) & 0x08) {
-//    // clear IRQ's
-//	  LoRa_write_single(_LoRa, SX127x_LoRa_IrqFlags, 0x08);
-//  }
-  return false;
-=======
 	else {
 		return LORA_UNAVAILABLE;
 	}
->>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488:FlightComputer/Core/Src/LoRa.c
 }

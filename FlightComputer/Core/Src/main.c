@@ -171,11 +171,7 @@ void proc_data_1_uint8(IMU_DATA_TO_SEND_t *data, uint8_t value) {
 	data->length += 1;
 }
 
-<<<<<<< HEAD
-void imu_data_conv_config(IMU *imu, IMU_DATA_TO_SEND_t *out){
-=======
-void imu_data_conv(IMU *imu, IMU_DATA_TO_SEND_t *out) {
->>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488
+void imu_data_conv_config(IMU *imu, IMU_DATA_TO_SEND_t *out) {
 	out->length = 0;
 	proc_data_1_uint8(out, data_hour);
 	proc_data_1_uint8(out, data_min);
@@ -208,77 +204,72 @@ void imu_data_conv(IMU *imu, IMU_DATA_TO_SEND_t *out) {
 	proc_data_4(out, data_PA_temp);
 
 }
-void imu_data_conv_onFly(IMU *imu, IMU_DATA_TO_SEND_t *out){
+void imu_data_conv_onFly(IMU *imu, IMU_DATA_TO_SEND_t *out) {
 	out->length = 0;
-	proc_data_1_uint8(out   , data_hour 	);
-	proc_data_1_uint8(out   , data_min  	);
-	proc_data_1_uint8(out   , data_sec  	);
-	proc_data_1_uint8(out 	, data_subSec );
-	proc_data_2_uint16(out	, data_counter);
-	proc_data_4(out    		, imu->quaternionWXYZ[0]);
-	proc_data_4(out    		, imu->quaternionWXYZ[1]);
-	proc_data_4(out    		, imu->quaternionWXYZ[2]);
-	proc_data_4(out    		, imu->quaternionWXYZ[3]);
-	proc_data_2(out    		, imu->rateOfTurnXYZ[0]);
-	proc_data_2(out    		, imu->rateOfTurnXYZ[1]);
-	proc_data_2(out    		, imu->rateOfTurnXYZ[2]);
-	proc_data_2(out    		, imu->freeAccelerationXYZ[0]);
-	proc_data_2(out    		, imu->freeAccelerationXYZ[1]);
-	proc_data_2(out    		, imu->freeAccelerationXYZ[2]);
-	proc_data_2(out			, imu->positionEcefXYZ[0]);
-	proc_data_2(out			, imu->positionEcefXYZ[1]);
-	proc_data_2(out			, imu->positionEcefXYZ[2]);
-	proc_data_2(out			, imu->velocityXYZ[0]);
-	proc_data_2(out			, imu->velocityXYZ[1]);
-	proc_data_2(out			, imu->velocityXYZ[2]);
+	proc_data_1_uint8(out, data_hour);
+	proc_data_1_uint8(out, data_min);
+	proc_data_1_uint8(out, data_sec);
+	proc_data_1_uint8(out, data_subSec);
+	proc_data_2_uint16(out, data_counter);
+	proc_data_4(out, imu->quaternionWXYZ[0]);
+	proc_data_4(out, imu->quaternionWXYZ[1]);
+	proc_data_4(out, imu->quaternionWXYZ[2]);
+	proc_data_4(out, imu->quaternionWXYZ[3]);
+	proc_data_2(out, imu->rateOfTurnXYZ[0]);
+	proc_data_2(out, imu->rateOfTurnXYZ[1]);
+	proc_data_2(out, imu->rateOfTurnXYZ[2]);
+	proc_data_2(out, imu->freeAccelerationXYZ[0]);
+	proc_data_2(out, imu->freeAccelerationXYZ[1]);
+	proc_data_2(out, imu->freeAccelerationXYZ[2]);
+	proc_data_2(out, imu->positionEcefXYZ[0]);
+	proc_data_2(out, imu->positionEcefXYZ[1]);
+	proc_data_2(out, imu->positionEcefXYZ[2]);
+	proc_data_2(out, imu->velocityXYZ[0]);
+	proc_data_2(out, imu->velocityXYZ[1]);
+	proc_data_2(out, imu->velocityXYZ[2]);
 
-<<<<<<< HEAD
 }
 
 GPIO_PinState modeSwitch = 0, prevModeSwitch = 0;
-typedef enum flymode{
-	config,
-	onFly
+typedef enum flymode {
+	config, onFly
 } flyMode;
 flyMode curFlyMode;
 uint32_t flyModeDebounce = 0;
 
 bool lora_recv_open = false;
 
-
-=======
->>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488
 /* USER CODE END 0 */
 
 /**
- * @brief  The application entry point.
- * @retval int
- */
-int main(void) {
-	/* USER CODE BEGIN 1 */
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+  /* USER CODE BEGIN 1 */
 
-	/* USER CODE END 1 */
+  /* USER CODE END 1 */
 
-	/* MCU Configuration--------------------------------------------------------*/
+  /* MCU Configuration--------------------------------------------------------*/
 
-	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-	HAL_Init();
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
 
-	/* USER CODE BEGIN Init */
+  /* USER CODE BEGIN Init */
 
 	HAL_UARTEx_ReceiveToIdle_DMA(&EXT_uart, EXT_buffer, EXT_BUFFER_SIZE);
 	__HAL_DMA_DISABLE_IT(&EXT_DMA_RX, DMA_IT_HT);
 
-	/* USER CODE END Init */
+  /* USER CODE END Init */
 
-	/* Configure the system clock */
-	SystemClock_Config();
+  /* Configure the system clock */
+  SystemClock_Config();
 
-	/* USER CODE BEGIN SysInit */
+  /* USER CODE BEGIN SysInit */
 
-	/* USER CODE END SysInit */
+  /* USER CODE END SysInit */
 
-<<<<<<< HEAD
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
@@ -287,56 +278,10 @@ int main(void) {
   MX_SPI4_Init();
   MX_RTC_Init();
   MX_ADC3_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
-
-  myLoRa.hSPIx = &hspi4;
-  myLoRa.CS_port = SPI4_CS_GPIO_Port;
-  myLoRa.CS_pin = SPI4_CS_Pin;
-  myLoRa.reset_port = LoRa_RST_GPIO_Port;
-  myLoRa.reset_pin = LoRa_RST_Pin;
-  myLoRa.DIO0_port = DIO0_GPIO_Port;
-  myLoRa.DIO0_pin = DIO0_Pin;
-  myLoRa.DIO1_port = DIO1_GPIO_Port;
-  myLoRa.DIO1_pin = DIO1_Pin;
-  myLoRa.DIO2_port = DIO2_GPIO_Port;
-  myLoRa.DIO2_pin = DIO2_Pin;
-  myLoRa.LoRa_modem = LORA_MODEM;
-  myLoRa.frequency = 433;           //MHz
-  myLoRa.bandWidth = BW_125KHz;
-  myLoRa.crcRate = CR_4_5;
-  myLoRa.implicit_on = EXPLICIT;
-  myLoRa.spredingFactor = SF_7;
-  myLoRa.preamble = 10;
-  myLoRa.paselect = RFO;
-  myLoRa.maxpower = 7;
-  myLoRa.outputpower = 15;                //0~15
-//  myLoRa.paselect = PA_BOOST;
-//  myLoRa.maxpower = 7;
-//  myLoRa.outputpower = 15;
-  myLoRa.PaDac = 0x84;      //0x84:max power = 17dBm   0x87:max power = 20dBm in PA_BOOST pin//-4~15
-  HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(FEM_CTX_GPIO_Port, FEM_CTX_Pin, GPIO_PIN_RESET);
-  myLoRa.PaOcp = 20;                     //default=0x0B=11, max=27
-  myLoRa.CRCon = 0;
-  myLoRa.TCXOon = 0;
-  myLoRa.packetSize = 12;
-
-  LoRa_reset(&myLoRa);
-  LoRa_init(&myLoRa);              //initialize LoRa configuration
-  LoRa_startReceiving(&myLoRa);
-=======
-	/* Initialize all configured peripherals */
-	MX_GPIO_Init();
-	MX_DMA_Init();
-	MX_SPI1_Init();
-	MX_USART1_UART_Init();
-	MX_USART3_UART_Init();
-	MX_SPI4_Init();
-	MX_RTC_Init();
-	MX_ADC3_Init();
-	/* USER CODE BEGIN 2 */
-
+	/*Lora init==============================================================*/
 	myLoRa = newLoRa();
 
 	myLoRa.CS_port = SPI4_CS_GPIO_Port;
@@ -355,7 +300,7 @@ int main(void) {
 	myLoRa.preamble = 10;              		// default = 8;
 
 	uint16_t LoRa_status = LoRa_init(&myLoRa);
-	if (LoRa_status == LORA_OK) {              //initialize LoRa configuration
+	if (LoRa_status == LORA_OK) {            //initialize LoRa configuration
 		printf("LoRa is running... \n");
 	} else {
 		printf("LoRa failed :( \n Error code: %d \n", LoRa_status);
@@ -364,16 +309,25 @@ int main(void) {
 	LoRa_startReceiving(&myLoRa);
 	uint8_t received_data[10];
 	uint8_t packet_size = 0;
->>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488
+	/*Lora init end===========================================================*/
 
 	IMU_Init();
 
-	HAL_ADC_Start(&hadc3);
+	/*temp init ##############################################################*/
+	uint32_t ADC_read;
+	int ADC_resolution=12;
+	int Vin_temp = 3300;
+	float Vout;//Vout,Vin_temp:in mV
+	float Vbias = 500;//TMP36 0 degree bias=500mV
+	float OutV_Temp_ratio=10;//OutV:mV,Temp:Celsius
+	float data_PA_temp;
+	/*temp init end###########################################################*/
 
-	/* USER CODE END 2 */
 
-	/* Infinite loop */
-	/* USER CODE BEGIN WHILE */
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
 	uint32_t timer = HAL_GetTick();
 	uint32_t loopRunTime = 0;
 	bool GPS_no_calied = true;
@@ -385,9 +339,9 @@ int main(void) {
 	printf("init finish!!!!!!!!!!!!\n");
 	while (1) {
 
-		/* USER CODE END WHILE */
+    /* USER CODE END WHILE */
 
-		/* USER CODE BEGIN 3 */
+    /* USER CODE BEGIN 3 */
 
 		//IMU data gathering
 		IMU_process_data();
@@ -400,27 +354,26 @@ int main(void) {
 		HAL_RTC_GetDate(&hrtc, &GetDate, RTC_FORMAT_BIN);
 
 		//Calibrate date ,only run once
-		if ((imu.myGnssData.numSV >= 4)
+		if (	(imu.myGnssData.numSV >= 4)
 				&& ((GetDate.Year + 2000) != imu.myGnssData.year)
 				&& (GPS_no_calied)) {
 			printf("Reset RTC timer\n");
 			RTC_TimeTypeDef IMU_time;
 			RTC_DateTypeDef IMU_date;
-<<<<<<< HEAD
-			IMU_date.Year		= imu.myGnssData.year-2000;
-			IMU_date.Month		= imu.myGnssData.month;
-			IMU_date.Date		= imu.myGnssData.day;
-			IMU_time.Hours 		= imu.myGnssData.hour;
-			IMU_time.Minutes 	= imu.myGnssData.minute;
-			IMU_time.Seconds	= imu.myGnssData.second;
-=======
+
 			IMU_date.Year = imu.myGnssData.year - 2000;
 			IMU_date.Month = imu.myGnssData.month;
 			IMU_date.Date = imu.myGnssData.day;
 			IMU_time.Hours = imu.myGnssData.hour;
 			IMU_time.Minutes = imu.myGnssData.minute;
 			IMU_time.Seconds = imu.myGnssData.second;
->>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488
+
+			IMU_date.Year = imu.myGnssData.year - 2000;
+			IMU_date.Month = imu.myGnssData.month;
+			IMU_date.Date = imu.myGnssData.day;
+			IMU_time.Hours = imu.myGnssData.hour;
+			IMU_time.Minutes = imu.myGnssData.minute;
+			IMU_time.Seconds = imu.myGnssData.second;
 
 			HAL_RTC_SetTime(&hrtc, &IMU_time, RTC_FORMAT_BIN);
 			HAL_RTC_SetDate(&hrtc, &IMU_date, RTC_FORMAT_BIN);
@@ -429,41 +382,36 @@ int main(void) {
 		}
 
 		/*check fly mode switch*/
-		modeSwitch = HAL_GPIO_ReadPin(Mode_Switch_GPIO_Port, Mode_Switch_Pin);
-		if(modeSwitch == GPIO_PIN_RESET && prevModeSwitch == GPIO_PIN_SET && HAL_GetTick() > flyModeDebounce){
+		modeSwitch = HAL_GPIO_ReadPin(Mode_Switch_GPIO_Port,
+		Mode_Switch_Pin);
+		if (modeSwitch == GPIO_PIN_RESET && prevModeSwitch == GPIO_PIN_SET
+				&& HAL_GetTick() > flyModeDebounce) {
 			flyModeDebounce = HAL_GetTick() + 1000;
-			if(curFlyMode == config){
+			if (curFlyMode == config) {
 				curFlyMode = onFly;
 				printf("fly mode now --> on fly\n");
-			}else{
+			} else {
 				curFlyMode = config;
 				printf("fly mode now --> config\n");
 			}
 		}
 		prevModeSwitch = modeSwitch;
 
-
-//	  //LoRa_receive()
-<<<<<<< HEAD
-		uint8_t read_value[256];
-		uint8_t read_leng = sizeof(read_value)/sizeof(read_value[0]);
-		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_SET);      //low frequency port switch, RESET for transmit, SET for receive
-		check_ver = LoRa_receive(&myLoRa, read_value, read_leng);//return received size
-		if(check_ver){
-			printf("%s\n", read_value);
-		}
-//		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_RESET);      //low frequency port switch, RESET for transmit, SET for receive
-=======
-		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_SET);
->>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488
-
+		//LoRa_receive()
+		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_SET); //low frequency port switch, RESET for transmit, SET for receive
 		packet_size = LoRa_receive(&myLoRa, received_data, 10);
 		if (packet_size != 0) {
-			printf("Lora get: %s", received_data);
-//		  HAL_Delay(500);
+			printf("LoRa get: %s", received_data);
 		}
-//	  HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_RESET);
 
+		/*temp sensor*/
+		HAL_ADC_Start(&hadc1);
+		ADC_read = HAL_ADC_GetValue(&hadc1);
+		Vout = ADC_read/(pow(2,ADC_resolution)-1)*Vin_temp;
+		data_PA_temp = (Vout-Vbias)/OutV_Temp_ratio;//temp:in Celsius
+		printf("temp: %f\n", data_PA_temp);
+
+		//====================================================================
 		if (HAL_GetTick() - timer > 333) {
 
 			data_hour = GetTime.Hours;
@@ -471,26 +419,21 @@ int main(void) {
 			data_sec = GetTime.Seconds;
 			data_subSec = ((float) (255 - GetTime.SubSeconds)) * 1.
 					/ ((float) (GetTime.SecondFraction + 1)) * 100;
-			data_PA_temp = HAL_ADC_GetValue(&hadc3);
-			data_PA_temp = -(data_PA_temp - 925.) / 6.7 + 25.;
 
 			//packing data from IMU to send via Lora
-			if(curFlyMode == config){
+			if (curFlyMode == config) {
 				imu_data_conv_config(&imu, &data2Lora);
-			}
-			else if(curFlyMode == onFly){
+			} else if (curFlyMode == onFly) {
 				imu_data_conv_onFly(&imu, &data2Lora);
 			}
 
-
 			//LoRa_transmit()
-<<<<<<< HEAD
-#if 0
+#if 1
 			HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_RESET);
 			uint8_t err = LoRa_transmit(&myLoRa, data2Lora.datas, data2Lora.length, TRANSMIT_TIMEOUT);
-			if(err == 0){
+			if (err == 0) {
 				printf("LoRa_transmit timed out\n");
-			}else{
+			} else {
 				printf("LoRa_transmit seccessed\n");
 				HAL_Delay(100);
 			}
@@ -498,102 +441,64 @@ int main(void) {
 #endif
 
 			loopRunTime = HAL_GetTick() - loopRunTime;
-//			printf("acc:%f,%f,%f,%f,%f,%d,%d,%d\n",
-//				imu.quatern4i747474744452522222225555555530
-//				imu.quaternionWXYZ[1],
-//				imu.quaternionWXYZ[2],
-//				imu.quaternionWXYZ[3],
-//				data_PA_temp,
-//				data2Lora.length,
-//				loopRunTime,
-//				data_counter);
+//			printf("acc:%f,%f,%f,%f,%f,%d,%d,%d\n", imu.quaternionWXYZ[0],
+//					imu.quaternionWXYZ[1], imu.quaternionWXYZ[2],
+//					imu.quaternionWXYZ[3], data_PA_temp, data2Lora.length,
+//					loopRunTime, data_counter);
 
-=======
-//			uint8_t send_value[myLoRa.packetSize];
-//			uint8_t send_leng = sizeof(send_value)/sizeof(send_value[0]);
-//			uint8_t state;
-//			for (int i = 0;i<=myLoRa.packetSize;i++){
-//				send_value[i] = (uint8_t)imu.accelerationXYZ[i];
-//			}
-//			state = LoRa_transmit(&myLoRa, data2Lora.datas, data2Lora.length, TRANSMIT_TIMEOUT);
-
-			loopRunTime = HAL_GetTick() - loopRunTime;
-			printf("acc:%f,%f,%f,%f,%f,%d,%d,%d\n", imu.quaternionWXYZ[0],
-					imu.quaternionWXYZ[1], imu.quaternionWXYZ[2],
-					imu.quaternionWXYZ[3], data_PA_temp, data2Lora.length,
-					loopRunTime, data_counter);
->>>>>>> 5980df17532ad40811aa1e6ea6121fdbdf3ba488
-
-//			HAL_UART_Transmit(&EXT_uart, data2Lora.datas, data2Lora.length, 0xFFFF);
-//			printf("\r\n");
-
-//			printf("data length%d\n", data2Lora.length);
-
-//			/* Display date Format : yy/mm/dd */
-//			printf("time:%02d,%02d,%02d,",2000 + GetDate.Year, GetDate.Month, GetDate.Date);
-//			/* Display time Format : hh:mm:ss */
-//			float miliSec = ((float)(255-GetTime.SubSeconds)) * 1. / ((float)(GetTime.SecondFraction +1));
-//			printf("%02d,%02d,%02d,%f\r\n",GetTime.Hours, GetTime.Minutes, GetTime.Seconds, miliSec);
-
-//			/* Display date Format : yy/mm/dd */
-//			printf("time:%02d,%02d,%02d,",2000+IMU_date.Year, IMU_date.Month, IMU_date.Date);
-//			/* Display time Format : hh:mm:ss */
-//			float miliSec = ((float)(255-GetTime.SubSeconds)) * 1. / ((float)(GetTime.SecondFraction +1));
-//			printf("%02d,%02d,%02d\r\n",IMU_time.Hours, IMU_time.Minutes, IMU_time.Seconds);
-
-//			printf("\r\n");
 
 			timer = HAL_GetTick();
 			data_counter += 1;
 			loopRunTime = HAL_GetTick();
-
 		}
 	}
-	/* USER CODE END 3 */
+  /* USER CODE END 3 */
 }
 
 /**
- * @brief System Clock Configuration
- * @retval None
- */
-void SystemClock_Config(void) {
-	RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
-	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-	/** Configure the main internal regulator output voltage
-	 */
-	__HAL_RCC_PWR_CLK_ENABLE();
-	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+  /** Configure the main internal regulator output voltage
+  */
+  __HAL_RCC_PWR_CLK_ENABLE();
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
 
-	/** Initializes the RCC Oscillators according to the specified parameters
-	 * in the RCC_OscInitTypeDef structure.
-	 */
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE
-			| RCC_OSCILLATORTYPE_LSE;
-	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-	RCC_OscInitStruct.LSEState = RCC_LSE_ON;
-	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-	RCC_OscInitStruct.PLL.PLLM = 8;
-	RCC_OscInitStruct.PLL.PLLN = 84;
-	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-	RCC_OscInitStruct.PLL.PLLQ = 4;
-	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
-		Error_Handler();
-	}
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 8;
+  RCC_OscInitStruct.PLL.PLLN = 84;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = 4;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
 
-	/** Initializes the CPU, AHB and APB buses clocks
-	 */
-	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
-			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
-	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
-	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK) {
-		Error_Handler();
-	}
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 /* USER CODE BEGIN 4 */
@@ -612,16 +517,17 @@ float hex2float(uint8_t *hexNum) {
 /* USER CODE END 4 */
 
 /**
- * @brief  This function is executed in case of error occurrence.
- * @retval None
- */
-void Error_Handler(void) {
-	/* USER CODE BEGIN Error_Handler_Debug */
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
 	__disable_irq();
 	while (1) {
 	}
-	/* USER CODE END Error_Handler_Debug */
+  /* USER CODE END Error_Handler_Debug */
 }
 
 #ifdef  USE_FULL_ASSERT
