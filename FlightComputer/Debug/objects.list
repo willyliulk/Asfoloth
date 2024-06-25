@@ -4,7 +4,7 @@
 "./Core/Src/IMU_rel/xsens_mdata2.o"
 "./Core/Src/IMU_rel/xsens_mti.o"
 "./Core/Src/IMU_rel/xsens_utility.o"
-"./Core/Src/LoRa_rel/sx127x_io.o"
+"./Core/Src/LoRa.o"
 "./Core/Src/adc.o"
 "./Core/Src/dma.o"
 "./Core/Src/gpio.o"

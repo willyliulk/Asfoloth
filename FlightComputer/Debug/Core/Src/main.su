@@ -5,7 +5,7 @@
 ../Core/Src/main.c:166:6:proc_data_2_uint16	24	static
 ../Core/Src/main.c:175:6:proc_data_1_uint8	16	static
 ../Core/Src/main.c:180:6:imu_data_conv	16	static
-../Core/Src/main.c:223:5:main	1200	dynamic
-../Core/Src/main.c:429:6:SystemClock_Config	88	static
-../Core/Src/main.c:472:7:hex2float	24	static
-../Core/Src/main.c:490:6:Error_Handler	4	static,ignoring_inline_asm
+../Core/Src/main.c:223:5:main	1224	static
+../Core/Src/main.c:459:6:SystemClock_Config	88	static
+../Core/Src/main.c:502:7:hex2float	24	static
+../Core/Src/main.c:520:6:Error_Handler	4	static,ignoring_inline_asm
