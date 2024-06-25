@@ -36,9 +36,8 @@ Core/Src/stm32f4xx_hal_msp.o: ../Core/Src/stm32f4xx_hal_msp.c \
  ../Core/Inc/IMU_rel/xsens_constants.h \
  ../Core/Inc/IMU_rel/xsens_utility.h ../Core/Inc/IMU_rel/xsens_mdata2.h \
  ../Core/Inc/IMU_rel/float16Tool.h \
- ../Core/Inc/IMU_rel/gnssPvtDataParser.h ../Core/Inc/LoRa_rel/sx127x_io.h \
- ../Core/Inc/LoRa_rel/sx127x_config.h \
- ../Core/Inc/LoRa_rel/sx127x_config.h ../Core/Inc/LoRa_rel/sx127x_reg.h
+ ../Core/Inc/IMU_rel/gnssPvtDataParser.h \
+ C:/Users/liuWilly/source/repos/Asfoloth/FlightComputer/LoRa/LoRa.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -82,7 +81,4 @@ Core/Src/stm32f4xx_hal_msp.o: ../Core/Src/stm32f4xx_hal_msp.c \
 ../Core/Inc/IMU_rel/xsens_mdata2.h:
 ../Core/Inc/IMU_rel/float16Tool.h:
 ../Core/Inc/IMU_rel/gnssPvtDataParser.h:
-../Core/Inc/LoRa_rel/sx127x_io.h:
-../Core/Inc/LoRa_rel/sx127x_config.h:
-../Core/Inc/LoRa_rel/sx127x_config.h:
-../Core/Inc/LoRa_rel/sx127x_reg.h:
+C:/Users/liuWilly/source/repos/Asfoloth/FlightComputer/LoRa/LoRa.h:

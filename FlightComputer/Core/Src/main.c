@@ -229,7 +229,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+     HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -256,6 +256,7 @@ int main(void)
   MX_ADC3_Init();
   /* USER CODE BEGIN 2 */
 
+/*
   myLoRa.hSPIx = &hspi4;
   myLoRa.CS_port = SPI4_CS_GPIO_Port;
   myLoRa.CS_pin = SPI4_CS_Pin;
@@ -287,9 +288,35 @@ int main(void)
   myLoRa.CRCon = 0;
   myLoRa.TCXOon = 0;
   myLoRa.packetSize = 12;
+*/
 
-  LoRa_init(&myLoRa);              //initialize LoRa configuration
+  myLoRa = newLoRa();
 
+  myLoRa.CS_port = SPI4_CS_GPIO_Port;
+  myLoRa.CS_pin = SPI4_CS_Pin;
+  myLoRa.reset_port = LoRa_RST_GPIO_Port;
+  myLoRa.reset_pin = LoRa_RST_Pin;
+  myLoRa.DIO0_port = DIO0_GPIO_Port;
+  myLoRa.DIO0_pin = DIO0_Pin;
+  myLoRa.hSPIx = &hspi4;
+  myLoRa.frequency             = 433;             // default = 433 		MHz
+  myLoRa.spredingFactor        = SF_7;            // default = SF_7
+  myLoRa.bandWidth             = BW_125KHz;       // default = BW_125	KHz
+  myLoRa.crcRate               = CR_4_5;          // default = CR_4_5
+  myLoRa.power                 = POWER_20db;      // default = 20db
+  myLoRa.overCurrentProtection = 100;             // default = 100 		mA
+  myLoRa.preamble              = 10;              // default = 8;
+
+  uint16_t LoRa_status = LoRa_init(&myLoRa);
+  if(LoRa_status == LORA_OK){              //initialize LoRa configuration
+	  printf("LoRa is running... \n");
+  }else{
+	  printf("LoRa failed :( \n Error code: %d \n", LoRa_status);
+  }
+  LoRa_setLowDaraRateOptimization(&myLoRa, 1);
+  LoRa_startReceiving(&myLoRa);
+  uint8_t received_data[10];
+  uint8_t packet_size = 0;
 
 	IMU_Init();
 
@@ -346,14 +373,16 @@ int main(void)
 		}
 
 //	  //LoRa_receive()
-//		uint8_t read_value[128];
-//		uint8_t read_leng = sizeof(read_value)/sizeof(read_value[0]);
-//		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_SET);      //low frequency port switch, RESET for transmit, SET for receive
-//		check_ver = LoRa_receive(&myLoRa, read_value, read_leng);//return received size
-//		if(check_ver){
-//			HAL_UART_Transmit(&EXT_uart, read_value, read_leng, 0xFFFF);
-//		}
-//		HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_RESET);      //low frequency port switch, RESET for transmit, SET for receive
+	  HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_SET);
+
+
+
+	  packet_size = LoRa_receive(&myLoRa, received_data, 10);
+	  if(packet_size != 0){
+		  printf("Lora get: %s", received_data);
+//		  HAL_Delay(500);
+	  }
+//	  HAL_GPIO_WritePin(FEM_CPS_GPIO_Port, FEM_CPS_Pin, GPIO_PIN_RESET);
 
 
 		if(HAL_GetTick() - timer > 333){
@@ -370,13 +399,13 @@ int main(void)
 			imu_data_conv(&imu, &data2Lora);
 
 			//LoRa_transmit()
-			uint8_t send_value[myLoRa.packetSize];
-			uint8_t send_leng = sizeof(send_value)/sizeof(send_value[0]);
-			uint8_t state;
-			for (int i = 0;i<=myLoRa.packetSize;i++){
-				send_value[i] = (uint8_t)imu.accelerationXYZ[i];
-			}
-			state = LoRa_transmit(&myLoRa, data2Lora.datas, data2Lora.length, TRANSMIT_TIMEOUT);
+//			uint8_t send_value[myLoRa.packetSize];
+//			uint8_t send_leng = sizeof(send_value)/sizeof(send_value[0]);
+//			uint8_t state;
+//			for (int i = 0;i<=myLoRa.packetSize;i++){
+//				send_value[i] = (uint8_t)imu.accelerationXYZ[i];
+//			}
+//			state = LoRa_transmit(&myLoRa, data2Lora.datas, data2Lora.length, TRANSMIT_TIMEOUT);
 
 
 

@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (10.3-2021.10)
+# Toolchain: GNU Tools for STM32 (11.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -11,7 +11,6 @@ RM := rm -rf
 -include sources.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
--include Core/Src/LoRa_rel/subdir.mk
 -include Core/Src/IMU_rel/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk
@@ -62,8 +61,8 @@ all: main-build
 main-build: FC_SPI_NEW.elf secondary-outputs
 
 # Tool invocations
-FC_SPI_NEW.elf FC_SPI_NEW.map: $(OBJS) $(USER_OBJS) D:\YiYuan\SSR\FC_SPI_NEW\STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "FC_SPI_NEW.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\YiYuan\SSR\FC_SPI_NEW\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FC_SPI_NEW.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+FC_SPI_NEW.elf FC_SPI_NEW.map: $(OBJS) $(USER_OBJS) C:\Users\liuWilly\source\repos\Asfoloth\FlightComputer\STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "FC_SPI_NEW.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\liuWilly\source\repos\Asfoloth\FlightComputer\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FC_SPI_NEW.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
